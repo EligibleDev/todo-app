@@ -9,7 +9,7 @@ const Home = () => {
     <main>
       <Header />
       <section className='container mx-auto flex justify-between py-8 gap-6'>
-        <div className='w-1/4 border-4 rounded-xl border-purple'>
+        <div className='w-1/4 border-4 rounded-xl border-purple h-fit'>
           <AddTaskForm />
         </div>
 

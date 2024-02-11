@@ -4,8 +4,8 @@ import "./button.css";
 
 const Button = ({ children, type, onClick }) => {
     return (
-        <button onClick={onClick} type={type || "button"}>
-            <span className="text">{children}</span>
+        <button className="button" onClick={onClick} type={type || "button"}>
+            <span className="text span">{children}</span>
         </button>
     );
 };

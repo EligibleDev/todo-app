@@ -10,12 +10,12 @@ const UtilsProvider = ({ children }) => {
     const previousData = localStorage.getItem("tasks");
     const reFetch = () => setFetch(!fetch);
 
-    const incompleteArray = JSON.parse(localStorage.getItem("tasks"))?.filter(
-        (task) => task?.completed === false
-    );
-    const completeArray = JSON.parse(localStorage.getItem("tasks"))?.filter(
-        (task) => task?.completed === true
-    );
+    const incompleteArray = JSON.parse(localStorage.getItem("tasks"))
+        ?.filter((task) => task?.completed === false)
+        .reverse();
+    const completeArray = JSON.parse(localStorage.getItem("tasks"))
+        ?.filter((task) => task?.completed === true)
+        .reverse();
 
     const handleAddTask = (e) => {
         e.preventDefault();
