@@ -4,8 +4,6 @@ import Header from '@/components/Header/Header';
 import React from 'react';
 
 const Home = () => {
-
-  //deploy
   return (
     <main>
       <Header />
