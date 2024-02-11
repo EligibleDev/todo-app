@@ -9,8 +9,12 @@ const UtilsProvider = ({ children }) => {
     const [fetch, setFetch] = useState(true);
     const previousData = localStorage.getItem("tasks");
     const reFetch = () => setFetch(!fetch);
+
     const incompleteArray = JSON.parse(localStorage.getItem("tasks"))?.filter(
         (task) => task?.completed === false
+    );
+    const completeArray = JSON.parse(localStorage.getItem("tasks"))?.filter(
+        (task) => task?.completed === true
     );
 
     const handleAddTask = (e) => {
@@ -46,6 +50,7 @@ const UtilsProvider = ({ children }) => {
         handleAddTask,
         setPriority,
         incompleteArray,
+        completeArray,
     };
     return <UtilsContext.Provider value={utils}>{children}</UtilsContext.Provider>;
 };
