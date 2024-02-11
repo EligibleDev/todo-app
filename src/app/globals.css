@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --purple: #9c88ff;
+    --blue: #0097e6;
+    --yellow: #fbc531;
+    --green: #4cd137;
+    --red: #e84118;
+}
