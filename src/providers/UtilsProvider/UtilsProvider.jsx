@@ -1,45 +1,39 @@
+"use client";
+
 import { createContext, useEffect, useState } from "react";
 
 export const UtilsContext = createContext();
 
 const UtilsProvider = ({ children }) => {
     const [priority, setPriority] = useState("low");
+    const browser = typeof window !== "undefined";
     const [updatedPriority, setUpdatedPriority] = useState("low");
     const [fetch, setFetch] = useState(true);
     const [editing, setEditing] = useState("");
-    const previousData =
-        typeof window !== "undefined" ? localStorage.getItem("tasks") : null;
+    const previousData = browser ? localStorage.getItem("tasks") : null;
     const [incompleteArray, setIncompleteArray] = useState(
-        previousData
-            ? JSON.parse(previousData)
-                  ?.filter((task) => task?.completed === false)
-                  ?.reverse()
-            : []
+        JSON.parse(previousData)
+            ?.filter((task) => task?.completed === false)
+            ?.reverse()
     );
     const [completeArray, setCompleteArray] = useState(
-        previousData
-            ? JSON.parse(previousData)
-                  ?.filter((task) => task?.completed === true)
-                  ?.reverse()
-            : []
+        JSON.parse(previousData)
+            ?.filter((task) => task?.completed === true)
+            ?.reverse()
     );
     const reFetch = () => setFetch(!fetch);
 
     useEffect(() => {
         setIncompleteArray(
-            previousData
-                ? JSON.parse(previousData)
-                      ?.filter((task) => task?.completed === false)
-                      ?.reverse()
-                : []
+            JSON.parse(previousData)
+                ?.filter((task) => task?.completed === false)
+                ?.reverse()
         );
 
         setCompleteArray(
-            previousData
-                ? JSON.parse(previousData)
-                      ?.filter((task) => task?.completed === true)
-                      ?.reverse()
-                : []
+            JSON.parse(previousData)
+                ?.filter((task) => task?.completed === true)
+                ?.reverse()
         );
     }, [previousData, fetch]);
 
@@ -52,16 +46,17 @@ const UtilsProvider = ({ children }) => {
         const createdAt = new Date();
         const completed = false;
 
+        //defining a new task out of the form's data
         const newTask = { id, title, description, createdAt, priority, completed };
         const tasks = JSON.stringify([newTask]);
 
-        if (previousData) {
+        if (previousData && browser) {
             const previousArray = JSON.parse(previousData);
             const updatedTasks = [...previousArray, newTask];
             localStorage.setItem("tasks", JSON.stringify(updatedTasks));
             e.target.reset();
             reFetch();
-        } else {
+        } else if (browser) {
             localStorage.setItem("tasks", tasks);
             e.target.reset();
             reFetch();
@@ -86,9 +81,12 @@ const UtilsProvider = ({ children }) => {
                 return task;
             }
         });
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        setEditing("");
-        reFetch();
+
+        if (browser) {
+            localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+            setEditing("");
+            reFetch();
+        }
     };
 
     const markAsComplete = (id) => {
@@ -98,8 +96,10 @@ const UtilsProvider = ({ children }) => {
             }
             return task;
         });
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        reFetch();
+        if (browser) {
+            localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+            reFetch();
+        }
     };
 
     const makeIncomplete = (id) => {
@@ -114,12 +114,12 @@ const UtilsProvider = ({ children }) => {
     };
 
     const deleteTask = (id) => {
-        const tasks = JSON.parse(
-            typeof window !== "undefined" ? localStorage.getItem("tasks") : null
-        );
+        const tasks = browser ? JSON.parse(localStorage.getItem("tasks")) : [];
         const updatedTasks = tasks?.filter((task) => task?.id !== id);
-        localStorage?.setItem("tasks", JSON.stringify(updatedTasks));
-        reFetch();
+        if (browser) {
+            localStorage?.setItem("tasks", JSON.stringify(updatedTasks));
+            reFetch();
+        }
     };
 
     const utils = {

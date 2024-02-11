@@ -62,7 +62,7 @@ const CompleteTasks = () => {
                     <option value="n2o">Sort by Date: Newest to Oldest</option>
                 </select>
 
-            {completeTasks.length ? (
+            {completeTasks?.length ? (
                 <div className="space-y-2">
                     {completeTasks?.map((task) => (
                         <Accordion key={task?.id} task={task} />
