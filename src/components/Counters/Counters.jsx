@@ -8,7 +8,7 @@ const Counters = () => {
 
     return (
         <div className="order-3">
-            {`Total ${JSON.parse(previousData).length} tasks added, ${
+            {`Total ${JSON.parse(previousData)?.length} tasks added, ${
                 completeArray?.length
             } completed, and ${incompleteArray?.length} incomplete`}
         </div>
