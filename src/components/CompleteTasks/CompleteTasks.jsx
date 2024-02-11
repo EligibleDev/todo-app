@@ -5,12 +5,13 @@ import { useContext, useEffect, useState } from "react";
 import Accordion from "../Accordion/Accordion";
 
 const CompleteTasks = () => {
-    const { completeArray, reFetch } = useContext(UtilsContext);
+    const { completeArray, reFetch, fetch, browser } = useContext(UtilsContext);
     const [completeTasks, setCompleteTasks] = useState(completeArray);
+    const [update, setUpdate] = useState(false);
 
     useEffect(() => {
-        setCompleteTasks(completeArray);
-    }, [completeArray]);
+        setUpdate(!update);
+    }, [fetch, update]);
 
     const handleSort = (method) => {
         const priorityOrder = { high: 3, medium: 2, low: 1 };
@@ -39,28 +40,32 @@ const CompleteTasks = () => {
                 return new Date(task2.createdAt) - new Date(task1.createdAt);
             });
             setCompleteTasks(sorted);
-        }else{
-            setCompleteTasks(completeArray)
+        } else {
+            setCompleteTasks(completeArray);
         }
 
         reFetch();
+        console.log(update);
+        // if (browser) {
+        //     location.reload();
+        // }
     };
 
     return (
         <div className="text-[#fff] space-y-4">
-                <h3 className="text-2xl">Complete Tasks</h3>
-                <select
-                    className="text-[#000] w-full border border-purple rounded-md px-2 py-3"
-                    onChange={(e) => {
-                        handleSort(e.target.value);
-                    }}
-                >
-                    <option value="">Default Sorting</option>
-                    <option value="h2l">Sort by Priority: High to low</option>
-                    <option value="l2h">Sort by Priority: low to High</option>
-                    <option value="o2n">Sort by Date: Oldest to Newest</option>
-                    <option value="n2o">Sort by Date: Newest to Oldest</option>
-                </select>
+            <h3 className="text-2xl">Complete Tasks</h3>
+            <select
+                className="text-[#000] w-full border border-purple rounded-md px-2 py-3"
+                onChange={(e) => {
+                    handleSort(e.target.value);
+                }}
+            >
+                <option value="">Default Sorting</option>
+                <option value="h2l">Sort by Priority: High to low</option>
+                <option value="l2h">Sort by Priority: low to High</option>
+                <option value="o2n">Sort by Date: Oldest to Newest</option>
+                <option value="n2o">Sort by Date: Newest to Oldest</option>
+            </select>
 
             {completeTasks?.length ? (
                 <div className="space-y-2">

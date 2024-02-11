@@ -6,12 +6,13 @@ import "../Accordion/accordion.css";
 import Accordion from "../Accordion/Accordion";
 
 const IncompleteTasks = () => {
-    const { incompleteArray, reFetch } = useContext(UtilsContext);
+    const { incompleteArray, reFetch, fetch, browser } = useContext(UtilsContext);
     const [incompleteTasks, setIncompleteTasks] = useState(incompleteArray);
+    const [update, setUpdate] = useState(false);
 
     useEffect(() => {
-        setIncompleteTasks(incompleteArray);
-    }, [incompleteArray]);
+        setUpdate(!update);
+    }, [fetch, update]);
 
     const handleSort = (method) => {
         const priorityOrder = { high: 3, medium: 2, low: 1 };
@@ -45,6 +46,9 @@ const IncompleteTasks = () => {
         }
 
         reFetch();
+        // if (browser) {
+        //     location.reload();
+        // }
     };
 
     return (

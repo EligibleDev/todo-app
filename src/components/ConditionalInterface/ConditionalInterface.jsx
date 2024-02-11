@@ -8,7 +8,7 @@ import CompleteTasks from "../CompleteTasks/CompleteTasks";
 const ConditionalInterface = () => {
     const { previousData } = useContext(UtilsContext);
 
-    return previousData ? (
+    return previousData?.length ? (
         <div className="flex flex-col lg:flex-row gap-6">
             <div className="w-full lg:w-1/2 bg-blue p-4 rounded-xl h-fit">
                 <IncompleteTasks />
@@ -18,7 +18,7 @@ const ConditionalInterface = () => {
             </div>
         </div>
     ) : (
-        <p>gotta add tasks to see here</p>
+        <p>Add tasks to see here</p>
     );
 };
 

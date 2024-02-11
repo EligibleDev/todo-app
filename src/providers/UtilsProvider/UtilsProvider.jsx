@@ -56,10 +56,16 @@ const UtilsProvider = ({ children }) => {
             localStorage.setItem("tasks", JSON.stringify(updatedTasks));
             e.target.reset();
             reFetch();
+            if (browser) {
+                location.reload();
+            }
         } else if (browser) {
             localStorage.setItem("tasks", tasks);
             e.target.reset();
             reFetch();
+            if (browser) {
+                location.reload();
+            }
         }
     };
 
@@ -86,6 +92,9 @@ const UtilsProvider = ({ children }) => {
             localStorage.setItem("tasks", JSON.stringify(updatedTasks));
             setEditing("");
             reFetch();
+            if (browser) {
+                location.reload();
+            }
         }
     };
 
@@ -99,6 +108,9 @@ const UtilsProvider = ({ children }) => {
         if (browser) {
             localStorage.setItem("tasks", JSON.stringify(updatedTasks));
             reFetch();
+            if (browser) {
+                location.reload();
+            }
         }
     };
 
@@ -111,6 +123,9 @@ const UtilsProvider = ({ children }) => {
         });
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
         reFetch();
+        if (browser) {
+            location.reload();
+        }
     };
 
     const deleteTask = (id) => {
@@ -119,11 +134,15 @@ const UtilsProvider = ({ children }) => {
         if (browser) {
             localStorage?.setItem("tasks", JSON.stringify(updatedTasks));
             reFetch();
+            if (browser) {
+                location.reload();
+            }
         }
     };
 
     const utils = {
         previousData,
+        browser,
         reFetch,
         fetch,
         editing,
