@@ -9,11 +9,11 @@ const ConditionalInterface = () => {
     const { previousData } = useContext(UtilsContext);
 
     return previousData ? (
-        <div className="flex gap-6">
-            <div className="w-1/2 bg-blue p-4 rounded-xl h-fit">
+        <div className="flex flex-col lg:flex-row gap-6">
+            <div className="w-full lg:w-1/2 bg-blue p-4 rounded-xl h-fit">
                 <IncompleteTasks />
             </div>
-            <div className="w-1/2 bg-purple p-4 rounded-xl h-fit">
+            <div className="w-full lg:w-1/2 bg-purple p-4 rounded-xl h-fit">
                 <CompleteTasks />
             </div>
         </div>

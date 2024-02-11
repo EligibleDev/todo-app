@@ -9,6 +9,10 @@ const IncompleteTasks = () => {
     const { incompleteArray, reFetch } = useContext(UtilsContext);
     const [incompleteTasks, setIncompleteTasks] = useState(incompleteArray);
 
+    useEffect(() => {
+        setIncompleteTasks(incompleteArray);
+    }, [incompleteArray]);
+
     const handleSort = (method) => {
         const priorityOrder = { high: 3, medium: 2, low: 1 };
 

@@ -1,12 +1,16 @@
 "use client";
 
 import { UtilsContext } from "@/providers/UtilsProvider/UtilsProvider";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Accordion from "../Accordion/Accordion";
 
 const CompleteTasks = () => {
     const { completeArray, reFetch } = useContext(UtilsContext);
     const [completeTasks, setCompleteTasks] = useState(completeArray);
+
+    useEffect(() => {
+        setCompleteTasks(completeArray);
+    }, [completeArray]);
 
     const handleSort = (method) => {
         const priorityOrder = { high: 3, medium: 2, low: 1 };
