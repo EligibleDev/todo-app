@@ -43,6 +43,18 @@ const UtilsProvider = ({ children }) => {
         }
     };
 
+    const markAsComplete = (id) => {
+        const updatedTasks = JSON.parse(previousData).map(task => {
+            if (task.id === id) {
+                return { ...task, completed: true };
+            }
+            return task;
+        });
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        reFetch(); 
+    };
+    
+
     const utils = {
         previousData,
         reFetch,
@@ -51,6 +63,7 @@ const UtilsProvider = ({ children }) => {
         setPriority,
         incompleteArray,
         completeArray,
+        markAsComplete,
     };
     return <UtilsContext.Provider value={utils}>{children}</UtilsContext.Provider>;
 };
