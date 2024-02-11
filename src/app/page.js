@@ -1,17 +1,15 @@
-"use client";
-
+import AddTaskForm from '@/components/AddTaskForm/AddTaskForm';
 import Header from '@/components/Header/Header';
-import { UtilsContext } from '@/providers/UtilsProvider/UtilsProvider';
-import React, { useContext } from 'react';
+import React from 'react';
 
 const Home = () => {
-  const { value } = useContext(UtilsContext)
-
   return (
     <main>
       <Header />
-      <section className='container flex justify-between'>
-        <div className='w-1/4'></div>
+      <section className='container mx-auto flex justify-between py-8'>
+        <div className='w-1/4 border-4 rounded-xl border-purple'>
+          <AddTaskForm />
+        </div>
         <div className='w-[37.5%]'></div>
         <div className='w-[37.5%]'></div>
       </section>
