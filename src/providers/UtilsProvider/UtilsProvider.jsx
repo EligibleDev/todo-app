@@ -6,7 +6,12 @@ export const UtilsContext = createContext();
 
 const UtilsProvider = ({ children }) => {
     const [priority, setPriority] = useState("low");
+    const [fetch, setFetch] = useState(true);
     const previousData = localStorage.getItem("tasks");
+    const reFetch = () => setFetch(!fetch);
+    const incompleteArray = JSON.parse(localStorage.getItem("tasks"))?.filter(
+        (task) => task?.completed === false
+    );
 
     const handleAddTask = (e) => {
         e.preventDefault();
@@ -26,13 +31,22 @@ const UtilsProvider = ({ children }) => {
             const updatedTasks = [...previousArray, newTask];
             localStorage.setItem("tasks", JSON.stringify(updatedTasks));
             e.target.reset();
+            reFetch();
         } else {
             localStorage.setItem("tasks", tasks);
             e.target.reset();
+            reFetch();
         }
     };
 
-    const utils = { handleAddTask, setPriority };
+    const utils = {
+        previousData,
+        reFetch,
+        fetch,
+        handleAddTask,
+        setPriority,
+        incompleteArray,
+    };
     return <UtilsContext.Provider value={utils}>{children}</UtilsContext.Provider>;
 };
 
