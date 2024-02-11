@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, useEffect, useState } from "react";
 
 export const UtilsContext = createContext();
@@ -9,30 +7,39 @@ const UtilsProvider = ({ children }) => {
     const [updatedPriority, setUpdatedPriority] = useState("low");
     const [fetch, setFetch] = useState(true);
     const [editing, setEditing] = useState("");
-    const previousData = localStorage.getItem("tasks");
+    const previousData =
+        typeof window !== "undefined" ? localStorage.getItem("tasks") : null;
     const [incompleteArray, setIncompleteArray] = useState(
-        JSON.parse(previousData)
-            ?.filter((task) => task?.completed === false)
-            ?.reverse()
+        previousData
+            ? JSON.parse(previousData)
+                  ?.filter((task) => task?.completed === false)
+                  ?.reverse()
+            : []
     );
     const [completeArray, setCompleteArray] = useState(
-        JSON.parse(previousData)
-            ?.filter((task) => task?.completed === true)
-            ?.reverse()
+        previousData
+            ? JSON.parse(previousData)
+                  ?.filter((task) => task?.completed === true)
+                  ?.reverse()
+            : []
     );
     const reFetch = () => setFetch(!fetch);
 
     useEffect(() => {
         setIncompleteArray(
-            JSON.parse(previousData)
-                ?.filter((task) => task?.completed === false)
-                ?.reverse()
+            previousData
+                ? JSON.parse(previousData)
+                      ?.filter((task) => task?.completed === false)
+                      ?.reverse()
+                : []
         );
 
         setCompleteArray(
-            JSON.parse(previousData)
-                ?.filter((task) => task?.completed === true)
-                ?.reverse()
+            previousData
+                ? JSON.parse(previousData)
+                      ?.filter((task) => task?.completed === true)
+                      ?.reverse()
+                : []
         );
     }, [previousData, fetch]);
 
@@ -45,7 +52,6 @@ const UtilsProvider = ({ children }) => {
         const createdAt = new Date();
         const completed = false;
 
-        //defining a new task out of the form's data
         const newTask = { id, title, description, createdAt, priority, completed };
         const tasks = JSON.stringify([newTask]);
 
@@ -108,7 +114,9 @@ const UtilsProvider = ({ children }) => {
     };
 
     const deleteTask = (id) => {
-        const tasks = JSON.parse(localStorage.getItem("tasks"));
+        const tasks = JSON.parse(
+            typeof window !== "undefined" ? localStorage.getItem("tasks") : null
+        );
         const updatedTasks = tasks?.filter((task) => task?.id !== id);
         localStorage?.setItem("tasks", JSON.stringify(updatedTasks));
         reFetch();
