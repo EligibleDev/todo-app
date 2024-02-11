@@ -3,11 +3,15 @@
 import { useContext } from "react";
 import Button from "../Button/Button";
 import { UtilsContext } from "@/providers/UtilsProvider/UtilsProvider";
+import Controls from "../Controls/Controls";
+import UpdateTaskFrom from "../UpdateTaskForm/UpdateTaskFrom";
 
 const Accordion = ({ task }) => {
-    const { markAsComplete } = useContext(UtilsContext);
+    const { markAsComplete, deleteTask, editing } = useContext(UtilsContext);
 
-    return (
+    return editing === task?.id ? (
+        <UpdateTaskFrom previousTask={task}/>
+    ) : (
         <section key={task?.id} className="accordion">
             <div
                 className={`tab ${
@@ -27,12 +31,7 @@ const Accordion = ({ task }) => {
                 <div className="tab__content space-y-4">
                     <p>{task?.description}</p>
 
-                    <div className="flex gap-1">
-                        <Button onClick={() => markAsComplete(task?.id)}>
-                            Mark as Complete
-                        </Button>
-                        <Button>Delete</Button>
-                    </div>
+                    <Controls task={task} />
                 </div>
             </div>
         </section>

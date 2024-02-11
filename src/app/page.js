@@ -5,6 +5,8 @@ import IncompleteTasks from '@/components/IncompleteTasks/IncompleteTasks';
 import React from 'react';
 
 const Home = () => {
+  //counter edit
+
   return (
     <main>
       <Header />
